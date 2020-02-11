@@ -31,6 +31,12 @@ class FindNoteByIdService implements ServiceInterface
      */
     public function handle()
     {
-        return Note::findOrFail($this->id);
+        $note = Note::find($this->id);
+
+        if (is_null($note)) {
+            throw new ModelNotFoundException("Note with id {$this->id} not found.");
+        }
+
+        return $note;
     }
 }
