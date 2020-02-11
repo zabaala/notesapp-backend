@@ -2,11 +2,9 @@
 
 namespace Tests\Unit;
 
-use \App\Domains\Notes\Note;
 use App\Domains\Notes\Services\CreateNoteService;
 use App\Support\Validation\ValidationException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Tests\TestCase;
 
 class CreateNoteServiceTest extends TestCase
