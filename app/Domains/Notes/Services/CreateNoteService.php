@@ -10,7 +10,7 @@ use App\Support\Validation\ValidationException;
 class CreateNoteService implements ServiceInterface
 {
     /**
-     * @var string
+     * @var array
      */
     private $data;
 
