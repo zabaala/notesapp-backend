@@ -25,11 +25,6 @@ class FetchAllNotesServiceTest extends TestCase
         $this->service = new FetchAllNotesService();
     }
 
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
     public function test_count_records_in_database()
     {
         $notes = $this->service->handle();

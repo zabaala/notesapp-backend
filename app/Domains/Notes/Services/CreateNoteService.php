@@ -20,7 +20,17 @@ class CreateNoteService implements ServiceInterface
      */
     public function __construct(array $data)
     {
+        $this->setData($data);
+    }
+
+    /**
+     * @param $data
+     * @return CreateNoteService
+     */
+    public function setData($data)
+    {
         $this->data = $data;
+        return $this;
     }
 
     /**
@@ -35,7 +45,7 @@ class CreateNoteService implements ServiceInterface
 
         $note = new Note();
         $note->title = $this->data['title'];
-        $note->text = $this->data['text'];
+        $note->text = $this->data['text'] ?? null;
         $note->save();
 
         return $note;
