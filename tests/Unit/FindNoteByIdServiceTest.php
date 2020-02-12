@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use App\Domains\Notes\Note;
 use App\Domains\Notes\Services\FindNoteByIdService;
+use App\Support\Popo\PlainOldPhpObject;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -47,6 +48,7 @@ class FindNoteByIdServiceTest extends TestCase
     {
         $note = (new FindNoteByIdService(1))->handle();
 
+        $this->assertInstanceOf(PlainOldPhpObject::class, $note);
         $this->assertEquals($note->id, $this->note->id);
         $this->assertEquals($note->title, $this->note->title);
         $this->assertEquals($note->text, $this->note->text);

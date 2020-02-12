@@ -3,6 +3,8 @@
 namespace App\Domains\Notes\Services;
 
 use App\Domains\Notes\Note;
+use App\Support\Popo\PlainOldPhpObject;
+use App\Support\Popo\PopoTransformer;
 use App\Support\Services\ServiceInterface;
 
 class FetchAllNotesService implements ServiceInterface
@@ -78,7 +80,7 @@ class FetchAllNotesService implements ServiceInterface
 
         // define if notes will be returned through pagination or collection...
         if ($this->paginated) {
-            $notes = $notes->paginate($this->pageSize);
+            $notes = PopoTransformer::transformPagination($notes->paginate($this->pageSize));
         } else {
             $notes = $notes->get();
         }

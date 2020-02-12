@@ -3,6 +3,7 @@
 namespace App\Domains\Notes\Services;
 
 use App\Domains\Notes\Note;
+use App\Support\Popo\PlainOldPhpObject;
 use App\Support\Services\ServiceInterface;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -26,7 +27,7 @@ class FindNoteByIdService implements ServiceInterface
     /**
      * Handle the service.
      *
-     * @return mixed
+     * @return PlainOldPhpObject
      * @throws ModelNotFoundException
      */
     public function handle()
@@ -37,6 +38,6 @@ class FindNoteByIdService implements ServiceInterface
             throw new ModelNotFoundException("Note with id {$this->id} not found.");
         }
 
-        return $note;
+        return PlainOldPhpObject::transform($note);
     }
 }

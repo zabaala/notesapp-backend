@@ -38,7 +38,7 @@ class PlainOldPhpObject
      * @param Model $model
      * @return PlainOldPhpObject
      */
-    public static function parse(Model $model)
+    public static function transform(Model $model)
     {
         $_this = new static();
         $_this->attributes = $_this->filterAllowedAttributes($model);

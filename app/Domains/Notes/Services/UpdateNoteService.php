@@ -4,6 +4,7 @@ namespace App\Domains\Notes\Services;
 
 use App\Domains\Notes\Note;
 use App\Domains\Notes\Validations\UpdateNoteValidation;
+use App\Support\Popo\PlainOldPhpObject;
 use App\Support\Services\ServiceInterface;
 use App\Support\Validation\ValidationException;
 
@@ -46,6 +47,6 @@ class UpdateNoteService implements ServiceInterface
         $note->text = $this->data['text'];
         $note->save();
 
-        return $note;
+        return PlainOldPhpObject::transform($note);
     }
 }

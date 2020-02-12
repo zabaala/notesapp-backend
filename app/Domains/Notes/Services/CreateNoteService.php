@@ -4,6 +4,7 @@ namespace App\Domains\Notes\Services;
 
 use App\Domains\Notes\Note;
 use App\Domains\Notes\Validations\CreateNewNoteValidation;
+use App\Support\Popo\PlainOldPhpObject;
 use App\Support\Services\ServiceInterface;
 use App\Support\Validation\ValidationException;
 
@@ -36,7 +37,7 @@ class CreateNoteService implements ServiceInterface
     /**
      * Handle the service.
      *
-     * @return mixed
+     * @return PlainOldPhpObject
      * @throws ValidationException
      */
     public function handle()
@@ -48,7 +49,7 @@ class CreateNoteService implements ServiceInterface
         $note->text = $this->data['text'] ?? null;
         $note->save();
 
-        return $note;
+        return PlainOldPhpObject::transform($note);
     }
 
 
