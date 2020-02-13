@@ -11,6 +11,8 @@ class NotesTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected $generatedItems = [];
+
     const RECORDS = 10;
 
     public function setUp(): void
@@ -30,25 +32,18 @@ class NotesTest extends TestCase
     {
         $this->get(route('notes.index', ['paginated' => 'true']))
             ->assertStatus(200)
-            ->assertJson([
-                'current_page' => '1'
-            ])
+            ->assertJson(['current_page' => '1'])
             ->assertJsonStructure(JsonStructure::get());
     }
 
     public function test_filter_by_keyword_with_paginated_results()
     {
-        factory(Note::class)->create([
+        $note = factory(Note::class)->create([
             'title' => 'A note...',
             'text' => 'A note text...'
         ]);
 
-        $response = $this->get(route('notes.index', ['paginated' => 'true']))
-            ->assertJson(['total' => self::RECORDS + 1]);
-
-        $this->assertEquals(self::RECORDS + 1, count($response->decodeResponseJson()['data']));
-
-        $this->get(route('notes.index',['paginated' => 'true', 'keyword' => 'note']))
+        $this->get(route('notes.index', ['paginated' => 'true', 'keyword' => 'note']))
             ->assertJson(['total' => 1]);
     }
 

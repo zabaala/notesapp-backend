@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use \App\Domains\Notes\Note;
 use \App\Domains\Notes\Services\FetchAllNotesService;
+use App\Support\Popo\PlainOldPhpObject;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
@@ -39,6 +40,10 @@ class FetchAllNotesServiceTest extends TestCase
 
         $this->assertInstanceOf(LengthAwarePaginator::class, $notes);
         $this->assertEquals(self::RECORDS, $notes->count());
+
+        foreach ($notes->all() as $note ) {
+            $this->assertInstanceOf(PlainOldPhpObject::class, $note);
+        }
     }
 
     public function test_filter_by_keyword()

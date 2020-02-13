@@ -2,9 +2,10 @@
 
 namespace App\Support\Popo;
 
+use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Database\Eloquent\Model;
 
-class PlainOldPhpObject
+class PlainOldPhpObject implements Arrayable
 {
     /**
      * @var array
@@ -101,5 +102,13 @@ class PlainOldPhpObject
         throw new \Exception(
             "Set value to a property in a POPO class is not allowed."
         );
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function toArray()
+    {
+        return $this->all();
     }
 }
