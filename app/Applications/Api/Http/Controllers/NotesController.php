@@ -33,7 +33,13 @@ class NotesController extends BaseController
             $service->searchKeyword($request->keyword);
         }
 
-        $service->isPaginated($request->has('paginated') && $request->paginated === 'true');
+        $isPaginated = $request->has('paginated') && $request->paginated === 'true';
+
+        if ($isPaginated) {
+            $service
+                ->isPaginated($isPaginated)
+                ->setQueryStringParameters(request()->all());
+        }
 
         return $service->handle();
     }
@@ -106,5 +112,4 @@ class NotesController extends BaseController
             );
         }
     }
-
 }

@@ -3,7 +3,6 @@
 namespace App\Domains\Notes\Services;
 
 use App\Domains\Notes\Note;
-use App\Support\Popo\PlainOldPhpObject;
 use App\Support\Popo\PopoTransformer;
 use App\Support\Services\ServiceInterface;
 
@@ -22,7 +21,14 @@ class FetchAllNotesService implements ServiceInterface
     /**
      * @var null|string
      */
-    private $searchKeyword = null;
+    protected $searchKeyword = null;
+
+    /**
+     * A list of additional query string parameter of paginator object.
+     *
+     * @var array
+     */
+    protected $queryStringParameters = [];
 
     /**
      * Define a keyword to filter notes.
@@ -43,6 +49,16 @@ class FetchAllNotesService implements ServiceInterface
     public function setPageSize($size = 15)
     {
         $this->pageSize = $size;
+        return $this;
+    }
+
+    /**
+     * @param array $queryStringParameters
+     * @return FetchAllNotesService
+     */
+    public function setQueryStringParameters(array $queryStringParameters)
+    {
+        $this->queryStringParameters = $queryStringParameters;
         return $this;
     }
 
@@ -80,7 +96,10 @@ class FetchAllNotesService implements ServiceInterface
 
         // define if notes will be returned through pagination or collection...
         if ($this->paginated) {
-            $notes = PopoTransformer::transformPagination($notes->paginate($this->pageSize));
+            $notes = PopoTransformer::transformPagination(
+                $notes->paginate($this->pageSize)
+                    ->appends($this->queryStringParameters)
+            );
         } else {
             $notes = $notes->get();
         }
