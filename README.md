@@ -5,6 +5,7 @@ em qualquer versão do Laravel.
 
 ---
 
+
 ## Introdução
 
 Qual a melhor forma de estruturarmos com um projeto Laravel, garantindo o seu crescimento e a sua manutenibilidade?
