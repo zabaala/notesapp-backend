@@ -63,3 +63,4 @@ Quem, em sã consciência, faria isso? Embora eu acredite que ninguém vá fazer
 Esse é o problema que tento resolver com esse projeto. Estudo a criação de uma abordagem
 onde o poder do model não chegue à camada de serviço da aplicação, existindo, somente, dentro da camada de serviço de domínio.
 
+_Work in progress..._
