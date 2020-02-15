@@ -3,6 +3,8 @@
 Um projeto modelo de como implementar camadas de serviço em projetos Laravel, sem a utilização de Repository Pattern, 
 em qualquer versão do Laravel.
 
+---
+
 ## Introdução
 
 Qual a melhor forma de estruturarmos com um projeto Laravel, garantindo o seu crescimento e a sua manutenibilidade?
