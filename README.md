@@ -12,7 +12,7 @@ Qual a melhor forma de estruturarmos com um projeto Laravel, garantindo o seu cr
 Essa é uma pergunta comum, quando pensamos em projetos de grande porte. Nesse repositório, exponho uma das abordagens utilizadas 
 por mim, em alguns dos projetos Laravel que já trabalhei. 
 
-É importante ressaltar que não considero a existência de uma maneira correta de trabalhar com o Laravel. A melhor forma, no meu ponto de vista,
+É importante ressaltar, que não considero a existência de uma maneira correta de trabalhar com o Laravel. A melhor forma, no meu ponto de vista,
 é aquela que funciona para o projeto, e para a equipe, fundamentalmente, garantindo a manutenção, extensão, funcionamento e 
 segurança do projeto. Logo, então, o que apresento aqui, é algo que atende à essas premissas. 
 
@@ -28,6 +28,34 @@ e modificadas por métodos acessores e modificadores, "escondendo", assim, suas 
 porque, neste padrão, as propriedades que deveriam estar ocultas, podem ser acessadas de forma direta, magicamente, 
 exatamente como acontece com o Laravel, com o Rails, Yii e muitos outros frameworks, porém com poderes de auto-criação, 
 destruição e muitos outros.
+
+## Trabalhando com serviços
+
+Nesse projeto, trabalharemos com serviços. Aqui, serviços herdam conceitos de Service Layer e Domains service do DDD, para que, os serviços
+possam ser estruturados de forma que as entidades não possuam regras de negócio e tudo aconteça através de serviços, mas, veja bem, 
+não há, aqui, uma implementação profunda e fiel de DDD, embora possuam algumas características dele. Isso acontece, porque podemos escolher
+quais abordagens queremos adicionar aos nossos projetos e essas foram as que eu escolhi para aplicar nos projetos que participo.
+
+Para começarmos com o entendimento da estrutura adotada, separei a aplicação em duas camadas: `camada de domínio` e `camada de aplicacão` e 
+considere que, entre elas, há uma barreira imaginária que separa as duas camadas, onde a camada de aplicacão só pode acessar qualquer recurso
+na camada de domínio através de um serviço. Tendo isso em mente, fica proibido o acesso direto, por exemplo, a um model, 
+ pela camada de aplicação. Logo, para tudo, teremos um serviço, que DEVE garantir que, sempre que um dado persistente seja retornado, por exemplo, 
+ao invés de retornar uma instância de um `Model` ou de `LengthAwarePaginator` com uma coleção de models, serão retornados para a camada de 
+aplicação, instâncias de POPO's (Plain Old PHP Object), para que somente os dados sejam retornados, ao invés de models emponderados, 
+evitando,assim, que dados persistentes sejam manipulados sem o conhecimento de algum serviço. 
+
+```txt
+Application service
+ - Api versions
+ - GraphQL
+ - Front-ends
+
+Domains service
+ - Domains
+    - Services
+ - Infrastructure
+ - Data layer
+``` 
 
 Pensando nisso, se dividirmos a aplicação em camadas, corremos um sério risco do objeto ultrapassar os limites da camada 
 e permitir que o model empoderado chegue à camada da aplicação, com poderes para se autodestruir, o que não é uma boa idéia.
