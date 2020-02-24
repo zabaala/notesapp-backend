@@ -36,7 +36,9 @@ possam ser estruturados de forma que as entidades não possuam regras de negóci
 não há, aqui, uma implementação profunda e fiel de DDD, embora possuam algumas características dele. Isso acontece, porque podemos escolher
 quais abordagens queremos adicionar aos nossos projetos e essas foram as que eu escolhi para aplicar nos projetos que participo.
 
-<img src="resources/images/presentation/01.png" alt="service layers" />
+<p align="center">
+    <img src="resources/images/presentation/01.png" alt="service layers" />
+</p>
 
 Para começarmos com o entendimento da estrutura adotada, este projeto está separado em duas camadas: `camada de domínio` e `camada de aplicacão` e 
 considere que, entre elas, há uma barreira imaginária que separa as duas camadas, onde a camada de aplicacão só pode acessar qualquer recurso
