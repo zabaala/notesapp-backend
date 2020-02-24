@@ -3,6 +3,8 @@
 Um projeto modelo de como implementar camadas de serviço em projetos Laravel, sem a utilização de Repository Pattern, 
 em qualquer versão do Laravel.
 
+_[Work in progress] Este documento está em construção_
+
 ---
 
 ## Introdução
@@ -29,7 +31,7 @@ porque, neste padrão, as propriedades que deveriam estar ocultas, podem ser ace
 exatamente como acontece com o Laravel, com o Rails, Yii e muitos outros frameworks, porém com poderes de auto-criação, 
 destruição e muitos outros.
 
-## Trabalhando com serviços
+## As camadas de serviço
 
 Nesse projeto, trabalharemos com serviços. Aqui, serviços herdam conceitos de Service Layer e Domains service do DDD, para que, os serviços
 possam ser estruturados de forma que as entidades não possuam regras de negócio e tudo aconteça através de serviços, mas, veja bem, 
@@ -60,54 +62,43 @@ Me refiro a evitar que algo desse tipo possa acontecer:
 Observe o código acima. Considerando que uma view qualquer, que é um serviço de aplicação, possui uma instância do model `Note` e, erroneamente, 
 aciona o metodo `delete()` do model, dentro de um laço que deveria estar aprensentado as informações das `notes`.
 
-```txt
-Application service
- - Api versions
- - GraphQL
- - Front-ends
+Separar a aplicação em camadas, e construir uma barreira entre elas, é necessário para que assumamos o controle total sobre os dados
+e para evitar, também, que esse tipo de coisa aconteça.
 
-Domains service
- - Domains
-    - Services
- - Infrastructure
- - Data layer
-``` 
+## Definições das camadas
 
-Pensando nisso, se dividirmos a aplicação em camadas, corremos um sério risco do objeto ultrapassar os limites da camada 
-e permitir que o model empoderado chegue à camada da aplicação, com poderes para se autodestruir, o que não é uma boa idéia.
+ - *Domain layer:* onde residem os objetos de negócio.
+ <br><br>
+  Exemplo: 
+  
+     ```txt
+     Domain
+        - Models
+        - Services
+        - Validations
+          ...
+     ``` 
 
-Vamos considerar o seguinte caso:
+ - *Application layer:* contém a mecânica da aplicação, faz o direcionamento dos objetos, envia/recebe dados para/do usuário, 
+ através de apis, CLI ou interfaces gráficas.
+ <br><br>
+ Exemplo: 
+ 
+    ```txt
+     - Apis
+     - GraphQL
+     - Front-ends
+    ```
 
-Temos um model chamado ```Note``` que está sendo enviado para a view.
+ - *Infraestrutura:* camada de apoio e suporte às demais camadas.
 
-```php
-<?php
+## Estrutura de pastas
 
-namespace App\Http\Controllers;
+Para termos um projeto mais organizado, precisamos descontruir um pouco da proposta inicial de um projeto Laravel e aproveitarmos 
+algo que também é proposto pelo Laravel, que é estruturar o seu projeto como você preferir. Então, não há estrutura de pastas correta,
+ela só precisa ser coerente pra você e para os demais participantes do desenvolvimento do projeto.
 
-class NotesController extends Controller
+De modo geral, as mudanças aqui serão feitas dentro da pasta `app`. Você pode fazer mudanças fora, também, fique à vontade! Se
+entender que é isso que deve ser feito, faça, mas, nesse projeto, as principais mudanças na estrutura de pastas acontecerão dentro da pasta `app`. 
 
-public function show($note)
-{
-    $note = Note::find($note);
-    return view('notes.show', compact('note'));
-}
-```
-
-Na view podemos fazer algo como isso:
-
-```blade
-<h1>{{ $note->title }}</h1>
-<p>{{ $note->description }}</p>
-
-<?php $note->delete() ?>
-```
-É estranho fazer isso. Esdrúxulo, eu diria. 
-
-Quem, em sã consciência, faria isso? Embora eu acredite que ninguém vá fazer isso, ainda assim, é possível fazer.
-
-Esse é o problema que tento resolver com esse projeto. Estudo a criação de uma abordagem
-onde o poder do model não chegue à camada de serviço da aplicação, existindo, somente, dentro da camada de serviço de domínio.
-
----
-_Work in progress..._
+ 
