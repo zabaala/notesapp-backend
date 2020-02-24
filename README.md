@@ -94,11 +94,65 @@ e para evitar, também, que esse tipo de coisa aconteça.
 
 ## Estrutura de pastas
 
-Para termos um projeto mais organizado, precisamos descontruir um pouco da proposta inicial de um projeto Laravel e aproveitarmos 
-algo que também é proposto pelo Laravel, que é estruturar o seu projeto como você preferir. Então, não há estrutura de pastas correta,
+Para termos um projeto mais organizado, precisamos descontruir um pouco a proposta inicial de um projeto Laravel e aproveitarmos 
+algo que também é proposto pelo framework, que é estruturar o seu projeto como você preferir. Então, não há estrutura de pastas correta,
 ela só precisa ser coerente pra você e para os demais participantes do desenvolvimento do projeto.
 
 De modo geral, as mudanças aqui serão feitas dentro da pasta `app`. Você pode fazer mudanças fora, também, fique à vontade! Se
 entender que é isso que deve ser feito, faça, mas, nesse projeto, as principais mudanças na estrutura de pastas acontecerão dentro da pasta `app`. 
 
- 
+### `App/Core`
+
+Para começar, vamos falar da pasta `app/Core`. 
+
+As pastas `Console`, `Exceptions`, `Http` e `Providers`, que estavam dentro da pasta `app`, foram movidas para `app/Core`. 
+Ela vai conter todas as pastas do bootstrap do projeto.
+
+Essa mudança afeta difetamente o framework, já que os arquivos namespaçados foram movidos para uma outra pasta. Logo, 
+foram feitas atualizações em todas as chamadas para esses arquivos, para esses arquivos, para resolver o problema com as referências. 
+
+### `App/Domains`
+
+Aqui estão os domínios que estamos trabalhando nesse projeto. No caso, Notes e Users. Dentro dessas pastas possuem os 
+modelos todos os serviços relacionados aos modelos.
+
+### `App/Support`
+
+Essa é a camada de infraestrutura, que mencionei anteriormente. Aqui, possuem serviços de apoio aos domínios ou aos
+serviços de aplicação. Um serviço da infraestrutura pode ser consumido diretamente por um serviço de aplicação ou por um 
+serviço de domínio.
+
+### `App/Applications`
+
+Aqui teremos todas as aplicações do nosso projeto. No nosso caso, só existe uma aplicação chamada API, mas poderiam haver 
+outras, como um GraphQL, uma command line ou uma interface gráfica, com views utilizando o próprio blade do Laravel.
+
+Estruturalmente, teriamos algo assim:
+
+```txt
+App\Applications/
+
+- Api
+    - Http
+        - Controllers
+    - Providers
+    routes.php
+
+- frontend
+    - Http
+        - Controllers
+    - Providers
+    - Resources
+         - _templates/default.blade.php
+         - notes/index.blade.php
+           ...
+    routes.php
+```
+
+## Author
+
+ - Mauricio Rodrigues <mmauricio.vsr@gmail.com> 
+
+## License
+
+MIT
