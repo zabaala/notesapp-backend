@@ -36,13 +36,27 @@ possam ser estruturados de forma que as entidades não possuam regras de negóci
 não há, aqui, uma implementação profunda e fiel de DDD, embora possuam algumas características dele. Isso acontece, porque podemos escolher
 quais abordagens queremos adicionar aos nossos projetos e essas foram as que eu escolhi para aplicar nos projetos que participo.
 
-Para começarmos com o entendimento da estrutura adotada, separei a aplicação em duas camadas: `camada de domínio` e `camada de aplicacão` e 
+<img src="resources/images/presentation/01.png" alt="service layers" />
+
+Para começarmos com o entendimento da estrutura adotada, este projeto está separado em duas camadas: `camada de domínio` e `camada de aplicacão` e 
 considere que, entre elas, há uma barreira imaginária que separa as duas camadas, onde a camada de aplicacão só pode acessar qualquer recurso
 na camada de domínio através de um serviço. Tendo isso em mente, fica proibido o acesso direto, por exemplo, a um model, 
  pela camada de aplicação. Logo, para tudo, teremos um serviço, que DEVE garantir que, sempre que um dado persistente seja retornado, por exemplo, 
 ao invés de retornar uma instância de um `Model` ou de `LengthAwarePaginator` com uma coleção de models, serão retornados para a camada de 
 aplicação, instâncias de POPO's (Plain Old PHP Object), para que somente os dados sejam retornados, ao invés de models emponderados, 
 evitando,assim, que dados persistentes sejam manipulados sem o conhecimento de algum serviço. 
+
+Me refiro a evitar que algo desse tipo possa acontecer:
+
+```blade
+@foreach($notes as $note)
+    <h1>{{ $note->title }}</h1>
+    <p>{{ $note->description }}</p>
+    <?php $note->delete() ?>
+@endforeach
+```
+Observe o código acima. Considerando que uma view qualquer, que é um serviço de aplicação, possui uma instância do model `Note` e, erroneamente, 
+aciona o metodo `delete()` do model, dentro de um laço que deveria estar aprensentado as informações das `notes`.
 
 ```txt
 Application service
