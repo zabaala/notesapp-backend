@@ -175,6 +175,7 @@ return [
         App\Core\Providers\EventServiceProvider::class,
 //        App\Core\Providers\RouteServiceProvider::class, // disable default route service...
         App\Applications\Api\Providers\ApiServiceProvider::class,
+        App\Applications\Front\Providers\FrontServiceProvider::class,
 
     ],
 
