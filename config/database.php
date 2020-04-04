@@ -52,8 +52,8 @@ return [
             'username' => env('DB_USERNAME', 'forge'),
             'password' => env('DB_PASSWORD', ''),
             'unix_socket' => env('DB_SOCKET', ''),
-            'charset' => 'utf8mb4',
-            'collation' => 'utf8mb4_unicode_ci',
+            'charset' => 'utf8',                    // changed by bitnami routine setup_db() in app-entrypoint.sh
+            'collation' => 'utf8_unicode_ci',       // changed by bitnami routine setup_db() in app-entrypoint.sh
             'prefix' => '',
             'prefix_indexes' => true,
             'strict' => true,

@@ -33,9 +33,15 @@ App\Applications/
     - Providers
         - FrontServiceProvider.php
     - Resources
-         - _templates/default.blade.php
-         - notes/index.blade.php
-           ...
+        - views
+            - _templates/default.blade.php
+            - notes/index.blade.php
+            ...
+        ...
     routes.php
 ```
 Os arquivos de rotas (routes.php) estão fora do diretório Http, porém por uma questão de semantica eles deveriam estar dentro do diretório Http.
+A nomenclatura dos diretórios 'Resources' e 'views' também precisa ser definida.
+
+2020-04-04
+Antes de fazer os testes unitários, de funcionalidade e demais é preciso criar um plano de testes? Segunda a literatura Sim, porém devido a proposta do projeto a resposta pode ser diferente.
