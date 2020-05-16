@@ -6,26 +6,30 @@
 version: '2'
 
 services:
-  mariadb:
-    image: 'bitnami/mariadb:10.1'
+  mysql:
+    image: mysql:5.7
+    volumes:
+      - ~/.notesapp/db:/var/lib/mysql
+    restart: always
+    ports:
+      - 3306:3306
     environment:
-      - ALLOW_EMPTY_PASSWORD=yes
-      - MARIADB_USER=my_user
-      - MARIADB_DATABASE=my_database
-      - MARIADB_PASSWORD=my_password
+      - MYSQL_ROOT_PASSWORD=my_password
+      - MYSQL_DATABASE=my_database
+      - MYSQL_USER=my_user
+      - MYSQL_PASSWORD=my_password
 
-  myapp:
+  app:
     tty: true
-    image: bitnami/laravel:7
+    image: ambientum/php:7.3-nginx
     environment:
-      - DB_HOST=mariadb
+      - DB_HOST=mysql
       - DB_USERNAME=my_user
       - DB_DATABASE=my_database
       - DB_PASSWORD=my_password
     depends_on:
-      - mariadb
+      - mysql
     ports:
-      - 3000:3000
+      - 8080:8080
     volumes:
-      - ./:/app
-    # privileged: true # Privileged mode could be required to run this container under Windows
+      - ./:/var/www/app
