@@ -42,7 +42,7 @@ class FrontServiceProvider extends ServiceProvider
     public function map()
     {
         Route::namespace($this->namespace)
-            ->group(__DIR__ . '/../routes.php');
+            ->group(__DIR__ . '/../Http/routes.php');
     }
 
 }
