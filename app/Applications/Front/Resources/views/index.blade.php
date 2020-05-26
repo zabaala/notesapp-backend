@@ -1,7 +1,7 @@
 @extends('front::_templates.default')
 @section('content')
     <div class="title m-b-md">
-     Index Here!
+     NotesApp Here!
     </div>
 
     <div class="links">
