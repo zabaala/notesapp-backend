@@ -3,6 +3,7 @@
 namespace App\Core\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Pagination\Paginator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +24,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        // Ref.: https://laravel.com/docs/8.x/upgrade#pagination
+        Paginator::useBootstrap();
     }
 }
